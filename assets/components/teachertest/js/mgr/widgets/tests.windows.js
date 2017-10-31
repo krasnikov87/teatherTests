@@ -4,7 +4,7 @@ teacherTest.window.CreateItem = function (config) {
         config.id = 'teachertest-item-window-create';
     }
     Ext.applyIf(config, {
-        title: _('teachertest_item_create'),
+        title: _('teachertest_item'),
         width: 720,
         modal:true,
         autoHeight: false,
@@ -116,12 +116,13 @@ Ext.reg('teachertest-item-window-create', teacherTest.window.CreateItem);
 
 
 teacherTest.window.UpdateItem = function (config) {
+    //console.log(config);
     config = config || {};
     if(!config.id) {
         config.id = 'teachertest-item-window-update';
     }
     Ext.applyIf(config, {
-        title: _('teachertest_item_update'),
+        title: _('teachertest_item'),
         width: 720,
         modal:true,
         autoHeight: false,
@@ -202,6 +203,7 @@ Ext.extend(teacherTest.window.UpdateItem, MODx.Window, {
                 items: [{
                     xtype: 'teachertest-grid-questions',
                     fieldLabel: _('teachertest_item_question'),
+                    record: config.record.object
                 }],
 
             }, {
@@ -210,6 +212,7 @@ Ext.extend(teacherTest.window.UpdateItem, MODx.Window, {
                 items: [{
                     xtype: 'teachertest-grid-balls',
                     fieldLabel: _('teachertest_item_balls'),
+                    record: config.record.object
                 }],
 
             }],

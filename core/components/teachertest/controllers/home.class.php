@@ -65,6 +65,8 @@ class teacherTestHomeManagerController extends modExtraManagerController
         $this->addJavascript($this->teacherTest->config['jsUrl'] . 'mgr/widgets/questions.windows.js');
         $this->addJavascript($this->teacherTest->config['jsUrl'] . 'mgr/widgets/balls.grid.js');
         $this->addJavascript($this->teacherTest->config['jsUrl'] . 'mgr/widgets/balls.windows.js');
+        $this->addJavascript($this->teacherTest->config['jsUrl'] . 'mgr/widgets/answer.grid.js');
+        $this->addJavascript($this->teacherTest->config['jsUrl'] . 'mgr/widgets/answer.windows.js');
         $this->addJavascript($this->teacherTest->config['jsUrl'] . 'mgr/widgets/home.panel.js');
         $this->addJavascript($this->teacherTest->config['jsUrl'] . 'mgr/sections/home.js');
 

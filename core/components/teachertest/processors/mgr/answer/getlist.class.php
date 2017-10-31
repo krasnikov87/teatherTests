@@ -1,9 +1,9 @@
 <?php
 
-class teacherTestBallsGetListProcessor extends modObjectGetListProcessor
+class teacherTestAnswerGetListProcessor extends modObjectGetListProcessor
 {
-    public $objectType = 'teachersTestDiploma';
-    public $classKey = 'teachersTestDiploma';
+    public $objectType = 'teacherTestAnswer';
+    public $classKey = 'teacherTestAnswer';
     public $defaultSortField = 'id';
     public $defaultSortDirection = 'DESC';
     //public $permission = 'list';
@@ -32,9 +32,9 @@ class teacherTestBallsGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
-        $test_id = $this->getProperty('test_id');
+        $questionId = $this->getProperty('question_id');
         $c->where([
-            'test_id' => $test_id
+            'question_id'=>$questionId
         ]);
         return $c;
     }
@@ -55,7 +55,7 @@ class teacherTestBallsGetListProcessor extends modObjectGetListProcessor
         $array['actions'][] = array(
             'cls' => '',
             'icon' => 'icon icon-edit',
-            'title' => $this->modx->lexicon('teachertest_test_balls_update'),
+            'title' => $this->modx->lexicon('teachertest_test_answer_update'),
             //'multiple' => $this->modx->lexicon('modextra_items_update'),
             'action' => 'updateItem',
             'button' => true,
@@ -67,4 +67,4 @@ class teacherTestBallsGetListProcessor extends modObjectGetListProcessor
 
 }
 
-return 'teacherTestBallsGetListProcessor';
+return 'teacherTestAnswerGetListProcessor';

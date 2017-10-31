@@ -32,12 +32,13 @@ class teacherTestQuestionGetListProcessor extends modObjectGetListProcessor
      */
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
-        $query = trim($this->getProperty('query'));
-        if ($query) {
-            $c->where(array(
-                'name:LIKE' => "%{$query}%",
-                'OR:description:LIKE' => "%{$query}%",
-            ));
+        $testId = trim($this->getProperty('test_id'));
+        if($testId){
+            $c->where([
+                'test_id'=>$testId
+            ]);
+        }else{
+            return $this->modx->lexicon('access_denied');
         }
 
         return $c;
@@ -86,17 +87,6 @@ class teacherTestQuestionGetListProcessor extends modObjectGetListProcessor
                 'menu' => true,
             );
         }
-
-        // Remove
-        $array['actions'][] = array(
-            'cls' => '',
-            'icon' => 'icon icon-trash-o action-red',
-            'title' => $this->modx->lexicon('teachertest_test_question_remove'),
-            'multiple' => $this->modx->lexicon('teachertest_questions_remove'),
-            'action' => 'removeItem',
-            'button' => true,
-            'menu' => true,
-        );
 
         return $array;
     }

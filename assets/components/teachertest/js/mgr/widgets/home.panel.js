@@ -15,21 +15,18 @@ teacherTest.panel.Home = function (config) {
             cls: '',
             style: {margin: '15px 0'}
         }, {
-            xtype: 'modx-tabs',
+            xtype: 'panel',
             defaults: {border: false, autoHeight: true},
             border: true,
             hideMode: 'offsets',
             items: [{
-                title: _('teachertest_items'),
-                layout: 'anchor',
-                items: [{
                     html: _('teachertest_intro_msg'),
                     cls: 'panel-desc',
                 }, {
                     xtype: 'teachertest-grid-items',
                     cls: 'main-wrapper',
                 }]
-            }]
+
         }]
     });
     teacherTest.panel.Home.superclass.constructor.call(this, config);

@@ -71,3 +71,29 @@ teacherTest.combo.questionType = function(config) {
 };
 Ext.extend(teacherTest.combo.questionType,MODx.combo.ComboBox);
 Ext.reg('teachertest-combo-question-types',teacherTest.combo.questionType);
+
+teacherTest.combo.BallsLevel = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        xtype:'combobox',
+        hiddenName: config.name,
+        store: new Ext.data.ArrayStore({
+
+            id: 0
+            ,fields: ['value','display']
+            ,data: [
+                [1, _('teachertest-combo-balls-types-level-first')],
+                [2, _('teachertest-combo-balls-types-level-two')],
+                [3, _('teachertest-combo-balls-types-level-three')],
+                [4, _('teachertest-combo-balls-types-level-four')],
+
+            ]
+        })
+        ,mode: 'local'
+        ,displayField: 'display'
+        ,valueField: 'value'
+    });
+    teacherTest.combo.BallsLevel.superclass.constructor.call(this,config);
+};
+Ext.extend(teacherTest.combo.BallsLevel,MODx.combo.ComboBox);
+Ext.reg('teachertest-combo-balls-level',teacherTest.combo.BallsLevel);

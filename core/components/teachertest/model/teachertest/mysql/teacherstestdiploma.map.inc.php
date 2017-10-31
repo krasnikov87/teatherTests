@@ -8,6 +8,7 @@ $xpdo_meta_map['teachersTestDiploma']= array (
   array (
     'test_id' => NULL,
     'min_balls' => NULL,
+    'level' => NULL,
   ),
   'fieldMeta' => 
   array (
@@ -15,12 +16,21 @@ $xpdo_meta_map['teachersTestDiploma']= array (
     array (
       'dbtype' => 'int',
       'precision' => '10',
+      'phptype' => 'integer',
       'null' => false,
     ),
     'min_balls' => 
     array (
       'dbtype' => 'int',
       'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+    ),
+    'level' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '50',
+      'phptype' => 'string',
       'null' => false,
     ),
   ),

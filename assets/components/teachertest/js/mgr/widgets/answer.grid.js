@@ -1,7 +1,7 @@
-teacherTest.grid.Balls = function (config) {
+teacherTest.grid.Answer = function (config) {
     config = config || {};
     if (!config.id) {
-        config.id = 'teachertest-grid-balls';
+        config.id = 'teachertest-grid-answer';
     }
     Ext.applyIf(config, {
         url: teacherTest.config.connector_url,
@@ -10,8 +10,8 @@ teacherTest.grid.Balls = function (config) {
         tbar: this.getTopBar(config),
         sm: new Ext.grid.CheckboxSelectionModel(),
         baseParams: {
-            action: 'mgr/balls/getlist',
-            test_id: config.record.id
+            action: 'mgr/answer/getlist',
+            question_id: config.record.id
         },
         listeners: {
             rowDblClick: function (grid, rowIndex, e) {
@@ -35,7 +35,7 @@ teacherTest.grid.Balls = function (config) {
         remoteSort: true,
         autoHeight: true,
     });
-    teacherTest.grid.Balls.superclass.constructor.call(this, config);
+    teacherTest.grid.Answer.superclass.constructor.call(this, config);
 
     // Clear selection on grid refresh
     this.store.on('load', function () {
@@ -44,7 +44,7 @@ teacherTest.grid.Balls = function (config) {
         }
     }, this);
 };
-Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
+Ext.extend(teacherTest.grid.Answer, MODx.grid.Grid, {
     windows: {},
 
     getMenu: function (grid, rowIndex) {
@@ -59,7 +59,7 @@ Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
     createItem: function (btn, e) {
 
         var w = MODx.load({
-            xtype: 'teachertest-balls-window-create',
+            xtype: 'teachertest-answer-window-create',
             id: Ext.id(),
             listeners: {
                 success: {
@@ -72,9 +72,7 @@ Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
 
         w.reset();
         w.setValues({
-            status: true,
-            test_id: Ext.getCmp('item-id').value,
-            type: 'radio'
+            question_id: Ext.getCmp('question-id').value,
         });
         w.show(e.target);
     },
@@ -91,18 +89,18 @@ Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
         MODx.Ajax.request({
             url: this.config.url,
             params: {
-                action: 'mgr/balls/get',
+                action: 'mgr/answer/get',
                 id: id
             },
             listeners: {
                 success: {
                     fn: function (r) {
-                        var w = Ext.getCmp('teachertest-balls-window-update');
+                        var w = Ext.getCmp('teachertest-answer-window-update');
                         if(w) {
                             w.close();
                         }
                         w = MODx.load({
-                            xtype: 'teachertest-balls-window-update',
+                            xtype: 'teachertest-answer-window-update',
                             id: Ext.id(),
                             record: r,
                             listeners: {
@@ -129,14 +127,14 @@ Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
         }
         MODx.msg.confirm({
             title: ids.length > 1
-                ? _('teachertest_balls_remove')
-                : _('teachertest_balls_remove'),
+                ? _('teachertest_answer_remove')
+                : _('teachertest_answer_remove'),
             text: ids.length > 1
-                ? _('teachertest_balls_remove_confirm')
-                : _('teachertest_balls_remove_confirm'),
+                ? _('teachertest_answer_remove_confirm')
+                : _('teachertest_answer_remove_confirm'),
             url: this.config.url,
             params: {
-                action: 'mgr/balls/remove',
+                action: 'mgr/answer/remove',
                 ids: Ext.util.JSON.encode(ids),
             },
             listeners: {
@@ -152,7 +150,7 @@ Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
 
 
     getFields: function () {
-        return ['id', 'level', 'min_balls', 'actions'];
+        return ['id', 'answer', 'correct', 'actions'];
     },
 
     getColumns: function () {
@@ -162,16 +160,16 @@ Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
             sortable: true,
             width: 70
         }, {
-            header: _('teachertest_balls_level'),
-            dataIndex: 'level',
+            header: _('teachertest_answer_name'),
+            dataIndex: 'answer',
             sortable: true,
             width: 200,
-            renderer: this._renderLevel,
         }, {
-            header: _('teachertest_balls_min'),
-            dataIndex: 'min_balls',
+            header: _('teachertest_answer_correct'),
+            dataIndex: 'correct',
             sortable: true,
             width: 200,
+            renderer: teacherTest.utils.renderBoolean
         }, {
             header: _('teachertest_grid_actions'),
             dataIndex: 'actions',
@@ -184,7 +182,7 @@ Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
 
     getTopBar: function () {
         return [{
-            text: '<i class="icon icon-plus"></i>&nbsp;' + _('teachertest_balls_create'),
+            text: '<i class="icon icon-plus"></i>&nbsp;' + _('teachertest_answer_create'),
             handler: this.createItem,
             scope: this
         }];
@@ -208,17 +206,7 @@ Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
         }
         return this.processEvent('click', e);
     },
-    _renderLevel: function (value) {
-        if(value == 1){
-            return _('teachertest-combo-balls-types-level-first')
-        } else if(value == 2){
-            return _('teachertest-combo-balls-types-level-two')
-        } else if(value == 3){
-            return _('teachertest-combo-balls-types-level-three')
-        } else if(value == 4){
-            return _('teachertest-combo-balls-types-level-four')
-        }
-    },
+
     _getSelectedIds: function () {
         var ids = [];
         var selected = this.getSelectionModel().getSelections();
@@ -233,14 +221,6 @@ Ext.extend(teacherTest.grid.Balls, MODx.grid.Grid, {
         return ids;
     },
 
-    _doSearch: function (tf) {
-        this.getStore().baseParams.query = tf.getValue();
-        this.getBottomToolbar().changePage(1);
-    },
 
-    _clearSearch: function () {
-        this.getStore().baseParams.query = '';
-        this.getBottomToolbar().changePage(1);
-    },
 });
-Ext.reg('teachertest-grid-balls', teacherTest.grid.Balls);
+Ext.reg('teachertest-grid-answer', teacherTest.grid.Answer);

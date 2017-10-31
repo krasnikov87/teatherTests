@@ -1,4 +1,5 @@
 teacherTest.grid.Questions = function (config) {
+    console.log(config)
     config = config || {};
     if (!config.id) {
         config.id = 'teachertest-grid-questions';
@@ -10,7 +11,8 @@ teacherTest.grid.Questions = function (config) {
         tbar: this.getTopBar(config),
         sm: new Ext.grid.CheckboxSelectionModel(),
         baseParams: {
-            action: 'mgr/question/getlist'
+            action: 'mgr/question/getlist',
+            test_id: config.record.id
         },
         listeners: {
             rowDblClick: function (grid, rowIndex, e) {
@@ -227,22 +229,6 @@ Ext.extend(teacherTest.grid.Questions, MODx.grid.Grid, {
             text: '<i class="icon icon-plus"></i>&nbsp;' + _('teachertest_question_create'),
             handler: this.createItem,
             scope: this
-        }, '->', {
-            xtype: 'teachertest-field-search',
-            width: 250,
-            listeners: {
-                search: {
-                    fn: function (field) {
-                        this._doSearch(field);
-                    }, scope: this
-                },
-                clear: {
-                    fn: function (field) {
-                        field.setValue('');
-                        this._clearSearch();
-                    }, scope: this
-                },
-            }
         }];
     },
 
@@ -277,16 +263,6 @@ Ext.extend(teacherTest.grid.Questions, MODx.grid.Grid, {
         }
 
         return ids;
-    },
-
-    _doSearch: function (tf) {
-        this.getStore().baseParams.query = tf.getValue();
-        this.getBottomToolbar().changePage(1);
-    },
-
-    _clearSearch: function () {
-        this.getStore().baseParams.query = '';
-        this.getBottomToolbar().changePage(1);
-    },
+    }
 });
 Ext.reg('teachertest-grid-questions', teacherTest.grid.Questions);

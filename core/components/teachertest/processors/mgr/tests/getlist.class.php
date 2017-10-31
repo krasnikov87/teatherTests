@@ -87,17 +87,6 @@ class teacherTestItemGetListProcessor extends modObjectGetListProcessor
             );
         }
 
-        // Remove
-        $array['actions'][] = array(
-            'cls' => '',
-            'icon' => 'icon icon-trash-o action-red',
-            'title' => $this->modx->lexicon('teachertest_item_test_remove'),
-            'multiple' => $this->modx->lexicon('teachertest_items_test_remove'),
-            'action' => 'removeItem',
-            'button' => true,
-            'menu' => true,
-        );
-
         return $array;
     }
 

@@ -4,9 +4,10 @@ teacherTest.window.CreateQuestions = function (config) {
         config.id = 'teachertest-question-window-create';
     }
     Ext.applyIf(config, {
-        title: _('teachertest_item_create'),
+        title: _('teachertest_question_name'),
         width: 670,
         autoHeight: true,
+        modal:true,
         url: teacherTest.config.connector_url,
         action: 'mgr/question/create',
         fields: this.getFields(config),
@@ -99,7 +100,7 @@ Ext.extend(teacherTest.window.CreateQuestions, MODx.Window, {
 Ext.reg('teachertest-question-window-create', teacherTest.window.CreateQuestions);
 
 
-teacherTest.window.UpdateItem = function (config) {
+teacherTest.window.UpdateQuestions = function (config) {
     config = config || {};
 
     if (!config.id) {
@@ -107,7 +108,7 @@ teacherTest.window.UpdateItem = function (config) {
     }
 
     Ext.applyIf(config, {
-        title: _('teachertest_item_update'),
+        title: _('teachertest_question_name'),
         width: 700,
         autoHeight: true,
         url: teacherTest.config.connector_url,
@@ -120,48 +121,66 @@ teacherTest.window.UpdateItem = function (config) {
             }, scope: this
         }]
     });
-    teacherTest.window.UpdateItem.superclass.constructor.call(this, config);
+    teacherTest.window.UpdateQuestions.superclass.constructor.call(this, config);
     this.on('activate', function() {
         if (MODx.loadRTE) {
             MODx.loadRTE(config.id+'-description');
         }
     });
 };
-Ext.extend(teacherTest.window.UpdateItem, MODx.Window, {
+Ext.extend(teacherTest.window.UpdateQuestions, MODx.Window, {
 
     getFields: function (config) {
-        return [ {
-            xtype: 'hidden',
-            name: 'id',
-            id: config.id + '-id',
-            anchor: '99%',
-            allowBlank: false,
-        }, {
-            xtype: 'hidden',
-            name: 'test_id',
-            id: config.id + '-test-id',
-            anchor: '99%',
-            allowBlank: false,
-            value: config.value
-        }, {
-            xtype: 'textarea',
-            fieldLabel: _('teachertest_question_name'),
-            name: 'question',
-            id: config.id + '-description',
-            height: 150,
-            anchor: '99%'
-        }, {
-            xtype: 'xcheckbox',
-            boxLabel: _('teachertest_item_active'),
-            name: 'status',
-            id: config.id + '-active',
-            checked: true,
-        }, {
-            xtype: 'teachertest-combo-question-types',
-            fieldLabel: _('teachertest_question_type'),
-            name: 'type',
-            id: config.id + '-type',
-            value: 'radio'
+        return [{
+            xtype: 'modx-tabs',
+            defaults: {border: false, autoHeight: true},
+            border: true,
+            hideMode: 'offsets',
+            items: [{
+                title: _('teachertest_question_name'),
+                layout: 'form',
+                items: [{
+                    xtype: 'hidden',
+                    name: 'id',
+                    id: 'question-id',
+                    anchor: '99%',
+                    allowBlank: false,
+                }, {
+                    xtype: 'hidden',
+                    name: 'test_id',
+                    id: config.id + '-test-id',
+                    anchor: '99%',
+                    allowBlank: false,
+                    value: config.value
+                }, {
+                    xtype: 'textarea',
+                    fieldLabel: _('teachertest_question_name'),
+                    name: 'question',
+                    id: config.id + '-description',
+                    height: 150,
+                    anchor: '99%'
+                }, {
+                    xtype: 'xcheckbox',
+                    boxLabel: _('teachertest_item_active'),
+                    name: 'status',
+                    id: config.id + '-active',
+                    checked: true,
+                }, {
+                    xtype: 'teachertest-combo-question-types',
+                    fieldLabel: _('teachertest_question_type'),
+                    name: 'type',
+                    id: config.id + '-type',
+                    value: 'radio'
+                }],
+            }, {
+                title: _('teachertest_answer_names'),
+                layout: 'anchor',
+                items: [{
+                    xtype: 'teachertest-grid-answer',
+                    fieldLabel: _('teachertest_answer_names'),
+                    record: config.record.object
+                }]
+            }],
         }];
     },
 
@@ -169,4 +188,4 @@ Ext.extend(teacherTest.window.UpdateItem, MODx.Window, {
     }
 
 });
-Ext.reg('teachertest-question-window-update', teacherTest.window.UpdateItem);
+Ext.reg('teachertest-question-window-update', teacherTest.window.UpdateQuestions);

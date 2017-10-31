@@ -70,29 +70,62 @@ $_lang['teachertest_question_err_save'] = 'Ошибка при сохранен�
 $_lang['teachertest_grid_search'] = 'Поиск';
 
 /*Дипломы*/
-$_lang['teachertest_test_balls'] = 'Дипломы';
+$_lang['teachertest_test_balls'] = 'Градация';
 
-$_lang['teachertest_balls_name'] = 'Диплом';
-$_lang['teachertest_balls_names'] = 'Дипломы';
+$_lang['teachertest_balls_name'] = 'Градация';
+$_lang['teachertest_balls_names'] = 'Градация';
 
-$_lang['teachertest_balls_create'] = 'Создать Диплом';
-$_lang['teachertest_balls_update'] = 'Изменить Диплом';
-$_lang['teachertest_balls_enable'] = 'Включить Диплом';
-$_lang['teachertest_balls_enable'] = 'Включить Диплом';
-$_lang['teachertest_balls_disable'] = 'Отключить Диплом';
-$_lang['teachertest_ballss_disable'] = 'Отключить Диплом';
-$_lang['teachertest_balls_remove'] = 'Удалить Диплом';
-$_lang['teachertest_ballss_remove'] = 'Удалить Дипломы';
-$_lang['teachertest_balls_remove_confirm'] = 'Вы уверены, что хотите удалить этот Диплом?';
-$_lang['teachertest_ballss_remove_confirm'] = 'Вы уверены, что хотите удалить эти Дипломы?';
-
-
-$_lang['teachertest_balls_err_balls'] = 'Вы должны указать Диплом.';
-$_lang['teachertest_balls_err_ae'] = 'Такой Диплом уже существует.';
-$_lang['teachertest_balls_err_nf'] = 'Диплом не найдены.';
-$_lang['teachertest_balls_err_ns'] = 'Дипломы не указаны.';
-$_lang['teachertest_balls_err_remove'] = 'Ошибка при удалении Диплома.';
-$_lang['teachertest_balls_err_save'] = 'Ошибка при сохранении Диплома.';
+$_lang['teachertest_balls_create'] = 'Добавить Градацию';
+$_lang['teachertest_balls_update'] = 'Изменить Градацию';
+$_lang['teachertest_balls_enable'] = 'Включить Градацию';
+$_lang['teachertest_balls_enable'] = 'Включить Градацию';
+$_lang['teachertest_balls_disable'] = 'Отключить Градацию';
+$_lang['teachertest_ballss_disable'] = 'Отключить Градацию';
+$_lang['teachertest_balls_remove'] = 'Удалить Градацию';
+$_lang['teachertest_ballss_remove'] = 'Удалить Градации';
+$_lang['teachertest_balls_remove_confirm'] = 'Вы уверены, что хотите удалить этот Градацию?';
+$_lang['teachertest_ballss_remove_confirm'] = 'Вы уверены, что хотите удалить эти Градации?';
 
 
+$_lang['teachertest_balls_err_level'] = 'Вы должны указать уровень Градации.';
+$_lang['teachertest_balls_err_ae'] = 'Такая Градация уже существует.';
+$_lang['teachertest_balls_err_nf'] = 'Градация не найдены.';
+$_lang['teachertest_balls_err_ns'] = 'Градация не указан.';
+$_lang['teachertest_balls_err_remove'] = 'Ошибка при удалении Градации.';
+$_lang['teachertest_balls_err_save'] = 'Ошибка при сохранении Градации.';
 
+$_lang['teachertest_balls_level'] = 'Уровень Градации';
+$_lang['teachertest-combo-balls-types-level-first'] = 'Первый';
+$_lang['teachertest-combo-balls-types-level-two'] = 'Второй';
+$_lang['teachertest-combo-balls-types-level-three'] = 'Третий';
+$_lang['teachertest-combo-balls-types-level-four'] = 'Участник';
+$_lang['teachertest_balls_min'] = 'Минимум балов';
+
+
+/*Ответы*/
+$_lang['teachertest_answer_name'] = 'Ответ';
+$_lang['teachertest_answer_names'] = 'Ответы';
+$_lang['teachertest_answer_type'] = 'Кол-во правельных ответов';
+$_lang['teachertest-combo-answer-types_checkbox'] = 'Много';
+$_lang['teachertest-combo-answer-types-radio'] = 'Один';
+$_lang['teachertest_answer_create'] = 'Создать Ответ';
+$_lang['teachertest_answer_update'] = 'Изменить Ответ';
+$_lang['teachertest_answer_enable'] = 'Включить Ответ';
+$_lang['teachertest_answer_enable'] = 'Включить Ответы';
+$_lang['teachertest_answer_disable'] = 'Отключить Ответ';
+$_lang['teachertest_answers_disable'] = 'Отключить Ответы';
+$_lang['teachertest_answer_remove'] = 'Удалить Ответ';
+$_lang['teachertest_answers_remove'] = 'Удалить Ответы';
+$_lang['teachertest_answer_remove_confirm'] = 'Вы уверены, что хотите удалить этот Ответ?';
+$_lang['teachertest_answers_remove_confirm'] = 'Вы уверены, что хотите удалить эти Ответы?';
+
+
+$_lang['teachertest_answer_err_level'] = 'Вы должны указать Ответ.';
+$_lang['teachertest_answer_err_ae'] = 'Такой Ответ уже существует.';
+$_lang['teachertest_answer_err_nf'] = 'Ответ не найдены.';
+$_lang['teachertest_answer_err_ns'] = 'Ответ не указан.';
+$_lang['teachertest_answer_err_remove'] = 'Ошибка при удалении Ответа.';
+$_lang['teachertest_answer_err_save'] = 'Ошибка при сохранении Ответа.';
+
+$_lang['teachertest_answer_correct'] = 'Правельный Ответ';
+$_lang['teachertest_answer_one'] = 'В этом вопросе может быть только один правельный ответ';
