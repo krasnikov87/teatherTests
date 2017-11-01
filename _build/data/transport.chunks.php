@@ -13,6 +13,10 @@ $tmp = array(
         'file' => 'outerTpl',
         'description' => '',
     ),
+    'tpl.teacherTest.answerTpl' => array(
+        'file' => 'answerTpl',
+        'description' => '',
+    ),
 );
 
 // Save chunks for setup options

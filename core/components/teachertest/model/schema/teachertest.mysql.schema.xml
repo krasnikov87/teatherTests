@@ -33,7 +33,7 @@
 
         <composite alias="teacher_test_question_id_teacher_test_answer_question_id" class="teacherTestAnswer" local="id" foreign="question_id" cardinality="many" owner="local" />
 
-        <composite alias="teacher_test_question_id_teacher_test_users_question_id" class="teacherTestUsers" local="id" foreign="question_id" cardinality="many" owner="local" />
+        <composite alias="teacher_test_question_id_teacher_test_user_answer_question_id" class="teachersTestUsersAnswer" local="id" foreign="question_id" cardinality="many" owner="local" />
 
         <aggregate alias="teacher_test_item_id_teacher_test_question_test_id" class="teachersTestItem" local="test_id" foreign="id" cardinality="one" owner="foreign" />
     </object>
@@ -51,7 +51,6 @@
 
     <object class="teacherTestUsers" table="teacher_test_users" extends="xPDOSimpleObject">
         <field key="test_id" dbtype="int" precision="10" phptype="integer" null="false" />
-        <field key="question_id" dbtype="int" precision="10" phptype="integer" null="false" />
         <field key="user_id" dbtype="int" precision="10" phptype="integer" null="false" />
         <field key="order_id" dbtype="int" precision="10" phptype="integer" null="false" />
         <field key="product_id" dbtype="int" precision="10" phptype="integer" null="false" />
@@ -65,13 +64,14 @@
 
         <aggregate alias="teacher_test_item_id_test_user_test_id" class="teachersTestItem" local="test_id" foreign="id" cardinality="one" owner="foreign" />
 
-        <aggregate alias="teacher_test_question_id_teacher_test_users_question_id" class="teachersTestQuestion" local="question_id" foreign="id" cardinality="one" owner="foreign" />
-
     </object>
 
     <object class="teachersTestUsersAnswer" table="teacher_test_user_answer" extends="xPDOSimpleObject">
-        <field key="answer_id" dbtype="int" precision="11" phptype="integer" null="false" />
+        <field key="question_id" dbtype="int" precision="10" phptype="integer" null="false" />
+        <field key="answer_ids" dbtype="text" phptype="json" null="false" />
         <field key="user_test_id" dbtype="int" precision="11" phptype="integer" null="false" />
+
+        <aggregate alias="teacher_test_question_id_teacher_test_user_answer_question_id" class="teachersTestQuestion" local="question_id" foreign="id" cardinality="one" owner="foreign" />
 
         <aggregate alias="teacher_test_answer_id_teacher_test_user_answer_answer_id" class="teacherTestAnswer" local="answer_id" foreign="id" cardinality="one" owner="foreign" />
 

@@ -6,16 +6,23 @@ $xpdo_meta_map['teachersTestUsersAnswer']= array (
   'extends' => 'xPDOSimpleObject',
   'fields' => 
   array (
-    'answer_id' => NULL,
+    'question_id' => NULL,
+    'answer_ids' => NULL,
     'user_test_id' => NULL,
   ),
   'fieldMeta' => 
   array (
-    'answer_id' => 
+    'question_id' => 
     array (
       'dbtype' => 'int',
-      'precision' => '11',
+      'precision' => '10',
       'phptype' => 'integer',
+      'null' => false,
+    ),
+    'answer_ids' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'json',
       'null' => false,
     ),
     'user_test_id' => 
@@ -28,6 +35,14 @@ $xpdo_meta_map['teachersTestUsersAnswer']= array (
   ),
   'aggregates' => 
   array (
+    'teacher_test_question_id_teacher_test_user_answer_question_id' => 
+    array (
+      'class' => 'teachersTestQuestion',
+      'local' => 'question_id',
+      'foreign' => 'id',
+      'cardinality' => 'one',
+      'owner' => 'foreign',
+    ),
     'teacher_test_answer_id_teacher_test_user_answer_answer_id' => 
     array (
       'class' => 'teacherTestAnswer',

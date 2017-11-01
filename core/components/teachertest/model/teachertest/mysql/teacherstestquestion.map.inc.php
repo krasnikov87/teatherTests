@@ -52,9 +52,9 @@ $xpdo_meta_map['teachersTestQuestion']= array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
-    'teacher_test_question_id_teacher_test_users_question_id' => 
+    'teacher_test_question_id_teacher_test_user_answer_question_id' => 
     array (
-      'class' => 'teacherTestUsers',
+      'class' => 'teachersTestUsersAnswer',
       'local' => 'id',
       'foreign' => 'question_id',
       'cardinality' => 'many',

@@ -7,7 +7,6 @@ $xpdo_meta_map['teacherTestUsers']= array (
   'fields' => 
   array (
     'test_id' => NULL,
-    'question_id' => NULL,
     'user_id' => NULL,
     'order_id' => NULL,
     'product_id' => NULL,
@@ -20,13 +19,6 @@ $xpdo_meta_map['teacherTestUsers']= array (
   'fieldMeta' => 
   array (
     'test_id' => 
-    array (
-      'dbtype' => 'int',
-      'precision' => '10',
-      'phptype' => 'integer',
-      'null' => false,
-    ),
-    'question_id' => 
     array (
       'dbtype' => 'int',
       'precision' => '10',
@@ -105,14 +97,6 @@ $xpdo_meta_map['teacherTestUsers']= array (
     array (
       'class' => 'teachersTestItem',
       'local' => 'test_id',
-      'foreign' => 'id',
-      'cardinality' => 'one',
-      'owner' => 'foreign',
-    ),
-    'teacher_test_question_id_teacher_test_users_question_id' => 
-    array (
-      'class' => 'teachersTestQuestion',
-      'local' => 'question_id',
       'foreign' => 'id',
       'cardinality' => 'one',
       'owner' => 'foreign',
