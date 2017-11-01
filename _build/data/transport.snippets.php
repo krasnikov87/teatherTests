@@ -5,10 +5,14 @@
 $snippets = array();
 
 $tmp = array(
-    /*'modExtra' => array(
-        'file' => 'modextra',
+    'teacherTest' => array(
+        'file' => 'teacherTest',
         'description' => '',
-    ),*/
+    ),
+    'getTeacherTest' => array(
+        'file' => 'getTeacherTest',
+        'description' => '',
+    ),
 );
 
 foreach ($tmp as $k => $v) {

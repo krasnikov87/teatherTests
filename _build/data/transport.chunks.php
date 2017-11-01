@@ -5,14 +5,14 @@
 $chunks = array();
 
 $tmp = array(
-    /*'tpl.modExtra.item' => array(
-        'file' => 'item',
+    'tpl.teacherTest.allTest' => array(
+        'file' => 'allTest',
         'description' => '',
     ),
-    'tpl.modExtra.office' => array(
-        'file' => 'office',
+    'tpl.teacherTest.outerTpl' => array(
+        'file' => 'outerTpl',
         'description' => '',
-    ),*/
+    ),
 );
 
 // Save chunks for setup options
