@@ -1,15 +1,15 @@
 <?php
 /** @var modX $modx */
 /** @var array $scriptProperties */
-/** @var modExtra $modExtra */
+/** @var teacherTest $teacherTest */
 /** @var pdoTools $pdoTools */
 
 $allTpl = $modx->getOption('allTpl', $scriptProperties, 'tpl.teacherTest.allTest');
 
-if (!$modExtra = $modx->getService('teachertest', 'teacherTest', $modx->getOption('teachertest_core_path', null,
+if (!$teacherTest = $modx->getService('teachertest', 'teacherTest', $modx->getOption('teachertest_core_path', null,
         $modx->getOption('core_path') . 'components/teachertest/') . 'model/teachertest/', $scriptProperties)
 ) {
-    return 'Could not load modExtra class!';
+    return 'Could not load teacherTest class!';
 }
 
 //pdoTools
