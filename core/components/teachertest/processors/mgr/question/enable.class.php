@@ -27,7 +27,9 @@ class teachersTestQuestionEnableProcessor extends modObjectProcessor
             if (!$object = $this->modx->getObject($this->classKey, $id)) {
                 return $this->failure($this->modx->lexicon('teachertest_question_err_nf'));
             }
-
+            if($this->modx->getCount('teacherTestAnswer', ['question_id'=> $id]) < 2){
+                return $this->failure($this->modx->lexicon('teachertest_answer_count_error'));
+            }
             $object->set('status', true);
             $object->save();
         }

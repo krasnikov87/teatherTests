@@ -27,7 +27,17 @@ class teacherTestItemEnableProcessor extends modObjectProcessor
             if (!$object = $this->modx->getObject($this->classKey, $id)) {
                 return $this->failure($this->modx->lexicon('teachertest_item_err_nf'));
             }
+            $countQuestions = $object->get('count_questions');
+            $count =$this->modx->getCount('teachersTestQuestion', ['test_id'=> $id, 'status'=> 1]);
+            if($count < $countQuestions){
+                $this->modx->log(1, $this->modx->lexicon('teachertest_question_count_error', ['count'=>$countQuestions]));
+                return $this->failure($this->modx->lexicon('teachertest_question_count_error', ['count'=>$countQuestions]));
+            }
 
+            $graduation = $this->modx->getCount('teachersTestDiploma', ['test_id'=> $id]);
+            if($graduation < 1){
+                return $this->failure($this->modx->lexicon('teachertest_graduation_count_error'));
+            }
             $object->set('status', true);
             $object->save();
         }

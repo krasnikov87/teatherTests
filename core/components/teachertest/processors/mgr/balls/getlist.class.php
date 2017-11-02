@@ -55,7 +55,7 @@ class teacherTestBallsGetListProcessor extends modObjectGetListProcessor
         $array['actions'][] = array(
             'cls' => '',
             'icon' => 'icon icon-edit',
-            'title' => $this->modx->lexicon('teachertest_test_balls_update'),
+            'title' => $this->modx->lexicon('teachertest_balls_update'),
             //'multiple' => $this->modx->lexicon('modextra_items_update'),
             'action' => 'updateItem',
             'button' => true,

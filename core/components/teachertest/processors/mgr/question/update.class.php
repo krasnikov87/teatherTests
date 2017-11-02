@@ -31,6 +31,7 @@ class teachersTestQuestionUpdateProcessor extends modObjectUpdateProcessor
     {
         $id = (int)$this->getProperty('id');
         $question = trim($this->getProperty('question'));
+        $status = $this->getProperty('status');
         if (empty($id)) {
             return $this->modx->lexicon('teachertest_item_test_err_ns');
         }
@@ -39,6 +40,12 @@ class teachersTestQuestionUpdateProcessor extends modObjectUpdateProcessor
             $this->modx->error->addField('question', $this->modx->lexicon('teachertest_item_test_err_question'));
         } elseif ($this->modx->getCount($this->classKey, array('question' => $question, 'id:!=' => $id))) {
             $this->modx->error->addField('question', $this->modx->lexicon('teachertest_item_test_err_ae'));
+        }
+
+        if($status){
+            if($this->modx->getCount('teacherTestAnswer', ['question_id'=> $id]) < 2){
+                return $this->modx->lexicon('teachertest_answer_count_error');
+            }
         }
 
         return parent::beforeSet();

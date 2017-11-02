@@ -78,18 +78,6 @@ Ext.extend(teacherTest.window.CreateQuestions, MODx.Window, {
             id: config.id + '-description',
             height: 150,
             anchor: '99%'
-        }, {
-            xtype: 'xcheckbox',
-            boxLabel: _('teachertest_item_active'),
-            name: 'status',
-            id: config.id + '-active',
-            checked: true,
-        }, {
-            xtype: 'teachertest-combo-question-types',
-            fieldLabel: _('teachertest_question_type'),
-            name: 'type',
-            id: config.id + '-type',
-            value: 'radio'
         }];
     },
 

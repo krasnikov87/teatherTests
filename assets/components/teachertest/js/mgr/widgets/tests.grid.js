@@ -72,7 +72,7 @@ Ext.extend(teacherTest.grid.Items, MODx.grid.Grid, {
             }
         });
         w.reset();
-        w.setValues({status: true});
+        w.setValues({count_questions: 15});
         w.show(e.target);
     },
 
@@ -181,16 +181,20 @@ Ext.extend(teacherTest.grid.Items, MODx.grid.Grid, {
             },
             listeners: {
                 success: {
-                    fn: function () {
+                    fn: function (response) {
                         this.refresh();
                     }, scope: this
+                },
+                failure:{
+                    fn: function(response){
+                    }
                 }
             }
         })
     },
 
     getFields: function () {
-        return ['id', 'name', 'description', 'image',  'status', 'finished_count', 'payment_count', 'actions'];
+        return ['id', 'name', 'description', 'image',  'status', 'finished_count', 'payment_count', 'count_questions',  'actions'];
     },
 
     getColumns: function () {
@@ -224,6 +228,11 @@ Ext.extend(teacherTest.grid.Items, MODx.grid.Grid, {
         }, {
             header: _('teachertest_item_finished_count'),
             dataIndex: 'finished_count',
+            sortable: true,
+            width: 70
+        },{
+            header: _('teachertest_item_count_questions'),
+            dataIndex: 'count_questions',
             sortable: true,
             width: 70
         }, {

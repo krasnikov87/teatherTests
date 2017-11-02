@@ -130,3 +130,9 @@ $_lang['teachertest_answer_err_save'] = 'Ошибка при сохранени�
 $_lang['teachertest_answer_correct'] = 'Правельный Ответ';
 $_lang['teachertest_answer_one'] = 'В этом вопросе может быть только один правельный ответ';
 $_lang['teacherstest_error_session'] = 'Ошибка при сохранении ответа';
+
+$_lang['teachertest_item_count_questions_grid'] = 'Вопросов';
+$_lang['teachertest_item_count_questions'] = 'Вопросов в тесте';
+$_lang['teachertest_question_count_error'] = 'В этом тесте должно быть минимум [[+count]] активных вопросов.';
+$_lang['teachertest_graduation_count_error'] = 'В этом тесте должна быть минимум одна градация.';
+$_lang['teachertest_answer_count_error'] = 'В вопросе должно быть минимум два ответа.';

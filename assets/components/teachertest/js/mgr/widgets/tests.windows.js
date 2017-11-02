@@ -100,11 +100,10 @@ Ext.extend(teacherTest.window.CreateItem, MODx.Window, {
             hidetitle:true,
             html: '<img src="#">'
         }, {
-            xtype: 'xcheckbox',
-            boxLabel: _('teachertest_item_active'),
-            name: 'status',
-            id: config.id + '-active',
-            checked: true,
+            xtype: 'numberfield',
+            fieldLabel: _('teachertest_item_count_questions'),
+            name: 'count_questions',
+            id: config.id + '-count_questions',
         }];
     },
 
@@ -191,6 +190,11 @@ Ext.extend(teacherTest.window.UpdateItem, MODx.Window, {
                     id: 'photoHtml',
                     hidetitle: true,
                     html: config.record.object.image ? '<img src="/' + config.record.object.image + '" style="width: 100%; max-width: 300px; height: auto; max-height: 300px; margin-top:10px">' : '<img src="#">'
+                }, {
+                    xtype: 'numberfield',
+                    fieldLabel: _('teachertest_item_count_questions'),
+                    name: 'count_questions',
+                    id: config.id + '-count_questions',
                 }, {
                     xtype: 'xcheckbox',
                     boxLabel: _('teachertest_item_active'),

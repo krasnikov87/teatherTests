@@ -188,6 +188,11 @@ Ext.extend(teacherTest.grid.Questions, MODx.grid.Grid, {
                     fn: function () {
                         this.refresh();
                     }, scope: this
+                },
+                failure: {
+                  fn: function (response) {
+                      
+                  }  
                 }
             }
         })
