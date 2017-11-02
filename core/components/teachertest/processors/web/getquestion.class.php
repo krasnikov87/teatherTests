@@ -65,10 +65,11 @@ class getQuestionProcessor extends modObjectGetProcessor{
         $questionId = $this->getProperty('question');
 
         $diff = array_diff($correctIds, $_SESSION[$hash]['answers'][$questionId]['ids']);
-        if(count($diff == 0)){
+        $this->modx->log(1, print_r($diff,1));
+        if(count($diff)== 0){
             $diff = array_diff($_SESSION[$hash]['answers'][$questionId]['ids'], $correctIds);
         }
-
+        $this->modx->log(1, print_r($diff,1));
         if(count($diff)!= 0){
             $correct = 'false';
         }else{

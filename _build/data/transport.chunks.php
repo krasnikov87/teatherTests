@@ -17,6 +17,10 @@ $tmp = array(
         'file' => 'answerTpl',
         'description' => '',
     ),
+    'tpl.teacherTest.countsTpl' => array(
+        'file' => 'countsTpl',
+        'description' => '',
+    ),
 );
 
 // Save chunks for setup options

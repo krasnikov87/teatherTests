@@ -13,6 +13,10 @@ $tmp = array(
         'file' => 'getTeacherTest',
         'description' => '',
     ),
+    'TeacherTestResult' => array(
+        'file' => 'TeacherTestResult',
+        'description' => '',
+    ),
 );
 
 foreach ($tmp as $k => $v) {

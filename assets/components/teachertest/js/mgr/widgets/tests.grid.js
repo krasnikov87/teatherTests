@@ -58,7 +58,7 @@ Ext.extend(teacherTest.grid.Items, MODx.grid.Grid, {
     createItem: function (btn, e) {
             var w = Ext.getCmp('teachertest-item-window-create');
             if(w){
-                w.close();
+                w.destroy();
             }
             w = MODx.load({
             xtype: 'teachertest-item-window-create',
@@ -72,7 +72,7 @@ Ext.extend(teacherTest.grid.Items, MODx.grid.Grid, {
             }
         });
         w.reset();
-        w.setValues({count_questions: 15});
+        w.setValues({count_questions: 15, status: 0});
         w.show(e.target);
     },
 

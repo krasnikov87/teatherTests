@@ -1,5 +1,4 @@
 teacherTest.grid.Questions = function (config) {
-    console.log(config)
     config = config || {};
     if (!config.id) {
         config.id = 'teachertest-grid-questions';

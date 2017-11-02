@@ -18,7 +18,6 @@ teacherTest.window.CreateItem = function (config) {
             }, scope: this
         }],
         success: function (v1, v2, v3) {
-            console.log(v2)
             var res = JSON.parse(v2.response.responseText);
 
             MODx.Ajax.request({
@@ -104,6 +103,10 @@ Ext.extend(teacherTest.window.CreateItem, MODx.Window, {
             fieldLabel: _('teachertest_item_count_questions'),
             name: 'count_questions',
             id: config.id + '-count_questions',
+        }, {
+            xtype: 'hidden',
+            name: 'status',
+            id: config.id + '-active',
         }];
     },
 
@@ -115,7 +118,6 @@ Ext.reg('teachertest-item-window-create', teacherTest.window.CreateItem);
 
 
 teacherTest.window.UpdateItem = function (config) {
-    //console.log(config);
     config = config || {};
     if(!config.id) {
         config.id = 'teachertest-item-window-update';

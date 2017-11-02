@@ -1,0 +1,1 @@
+<span class="qu-[[+i]] [[+i:is=`1`:then=`active`:else=``]]">[[+i]]</span>

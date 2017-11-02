@@ -4,25 +4,7 @@
         <h1>[[+test_name]]</h1>
     </div>
     <div class="col-lg-12 numbers-question">
-        <span class="qu-1 active">1</span>
-        <span class="qu-2">2</span>
-        <span class="qu-3">3</span>
-        <span class="qu-4">4</span>
-        <span class="qu-5">5</span>
-        <span class="qu-6">6</span>
-        <span class="qu-7">7</span>
-        <span class="qu-8">8</span>
-        <span class="qu-9">9</span>
-        <span class="qu-10">10</span>
-        <span class="qu-11 ">11</span>
-        <span class="qu-12">13</span>
-        <span class="qu-12">14</span>
-        <span class="qu-12">15</span>
-        <span class="qu-12">16</span>
-        <span class="qu-12">17</span>
-        <span class="qu-12">18</span>
-        <span class="qu-12">19</span>
-        <span class="qu-12">20</span>
+        [[+count]]
     </div>
     <form class="answers-form" method="post">
         <input type="hidden" name="test" value="[[+test_id]]">

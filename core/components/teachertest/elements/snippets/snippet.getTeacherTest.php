@@ -13,7 +13,7 @@ if(!$modx->user->get('id')){
 $outerTpl = $modx->getOption('outerTpl', $scriptProperties, 'tpl.teacherTest.outerTpl');
 $answerTpl = $modx->getOption('answerTpl', $scriptProperties, 'tpl.teacherTest.answerTpl');
 $testId = $modx->getOption('test', $scriptProperties, $modx->request->getParameters('test'));
-
+$countsTpl = $modx->getOption('countsTpl', $scriptProperties, 'tpl.teacherTest.countsTpl');
 
 if (!$teacherTest = $modx->getService('teachertest', 'teacherTest', $modx->getOption('teachertest_core_path', null,
         $modx->getOption('core_path') . 'components/teachertest/') . 'model/teachertest/', $scriptProperties)
@@ -47,6 +47,12 @@ foreach ($a->stmt->fetchAll(PDO::FETCH_ASSOC) as $answer){
     $answers .= $modx->getChunk($answerTpl, array_merge($answer, ['type' => $question['type'], 'idx'=> $idx++]));
 }
 
+/*Список вопросов*/
+$counts = '';
+for($i = 1; $i<= $test->get('count_questions'); $i++){
+    $counts .= $modx->getChunk($countsTpl, ['i'=>$i]);
+}
+
 $hash = $modx->user->id.$test->get('id').'123';
 $_SESSION[hash('md5', $hash)] = [
     'answerChunk'=> $answerTpl,
@@ -62,4 +68,9 @@ $modx->regClientCSS($teacherTest->config['cssUrl'].'web/style.css');
 $modx->regClientScript('http://brm.io/js/libs/matchHeight/jquery.matchHeight.js');
 $modx->regClientScript($teacherTest->config['jsUrl'].'web/main.js');
 
-return $modx->getChunk($outerTpl, array_merge($question, ['answers'=>$answers, 'test_name'=> $test->get('name'), 'order_id'=>'123']));
+return $modx->getChunk($outerTpl, array_merge($question, [
+    'answers'=>$answers,
+    'test_name'=> $test->get('name'),
+    'order_id'=>'123',
+    'count'=> $counts
+]));

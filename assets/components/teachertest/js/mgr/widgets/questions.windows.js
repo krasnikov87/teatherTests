@@ -17,7 +17,6 @@ teacherTest.window.CreateQuestions = function (config) {
             }, scope: this
         }],
         success: function (v1, v2, v3) {
-            console.log(v2)
             var res = JSON.parse(v2.response.responseText);
 
             MODx.Ajax.request({
@@ -48,6 +47,11 @@ teacherTest.window.CreateQuestions = function (config) {
                             w.reset();
                             w.setValues(r.object);
                             w.show(Ext.getBody());
+                            w.on('activate', function() {
+                                if (MODx.loadRTE) {
+                                    MODx.loadRTE(config.id+'-question');
+                                }
+                            });
                         }, scope: this
                     }
                 }
@@ -57,7 +61,7 @@ teacherTest.window.CreateQuestions = function (config) {
     teacherTest.window.CreateQuestions.superclass.constructor.call(this, config);
     this.on('activate', function() {
         if (MODx.loadRTE) {
-            MODx.loadRTE(config.id+'-description');
+            MODx.loadRTE(config.id+'-question');
         }
     });
 };
@@ -75,10 +79,16 @@ Ext.extend(teacherTest.window.CreateQuestions, MODx.Window, {
             xtype: 'textarea',
             fieldLabel: _('teachertest_question_name'),
             name: 'question',
-            id: config.id + '-description',
+            id: config.id + '-question',
             height: 150,
             anchor: '99%'
-        }];
+        }, {
+            xtype: 'teachertest-combo-question-types',
+            fieldLabel: _('teachertest_question_type'),
+            name: 'type',
+            id: config.id + '-type',
+            value: 'radio'
+        } ];
     },
 
     loadDropZones: function () {
@@ -112,7 +122,7 @@ teacherTest.window.UpdateQuestions = function (config) {
     teacherTest.window.UpdateQuestions.superclass.constructor.call(this, config);
     this.on('activate', function() {
         if (MODx.loadRTE) {
-            MODx.loadRTE(config.id+'-description');
+            MODx.loadRTE(config.id+'-question');
         }
     });
 };
@@ -144,7 +154,7 @@ Ext.extend(teacherTest.window.UpdateQuestions, MODx.Window, {
                     xtype: 'textarea',
                     fieldLabel: _('teachertest_question_name'),
                     name: 'question',
-                    id: config.id + '-description',
+                    id: config.id + '-question',
                     height: 150,
                     anchor: '99%'
                 }, {
