@@ -2,7 +2,7 @@
 /** @var modX $modx */
 /** @var array $scriptProperties */
 /** @var teacherTest $teacherTest */
-/** @var pdoTools $pdoTools */
+
 
 
 /*Проверяем авторизирован ли пользователь*/
@@ -21,14 +21,6 @@ if (!$teacherTest = $modx->getService('teachertest', 'teacherTest', $modx->getOp
     return 'Could not load teacherTest class!';
 }
 
-//pdoTools
-$fqn = $modx->getOption('pdoFetch.class', null, 'pdotools.pdofetch', true);
-$path = $modx->getOption('pdofetch_class_path', null, MODX_CORE_PATH . 'components/pdotools/model/', true);
-if($pdoClass = $modx->loadClass($fqn, $path, false, true)) {
-    $pdoTools = new $pdoClass($modx, []);
-}else{
-    return 'false';
-}
 
 
 /*Получение теста*/
@@ -52,16 +44,22 @@ $a->stmt->execute();
 $answers = '';
 $idx = 1;
 foreach ($a->stmt->fetchAll(PDO::FETCH_ASSOC) as $answer){
-    $answers .= $pdoTools->getChunk($answerTpl, array_merge($answer, ['type' => $question['type'], 'idx'=> $idx++]));
+    $answers .= $modx->getChunk($answerTpl, array_merge($answer, ['type' => $question['type'], 'idx'=> $idx++]));
 }
 
-$hash = $modx->user->id.$test->id.
-$_SESSION[hash('md5', $hash)] = '';
+$hash = $modx->user->id.$test->get('id').'123';
+$_SESSION[hash('md5', $hash)] = [
+    'answerChunk'=> $answerTpl,
+    'order_id'=>123,
+    'test_id'=>$test->get('id'),
+    'questions'=> [
+        $question['id']
+    ],
+    'answers' => [],
+];
 
-$modx->regClientHTMLBlock('<link rel="stylesheet" href="'.$teacherTest->config['cssUrl'].'web/style.css">');
-$modx->regClientHTMLBlock('<script type="text/javascript" src="http://brm.io/js/libs/matchHeight/jquery.matchHeight.js"></script>');
-$modx->regClientHTMLBlock("<script type=\"text/javascript\">$(function() {
-	$('.answer-number').matchHeight();
-});</script>");
+$modx->regClientCSS($teacherTest->config['cssUrl'].'web/style.css');
+$modx->regClientScript('http://brm.io/js/libs/matchHeight/jquery.matchHeight.js');
+$modx->regClientScript($teacherTest->config['jsUrl'].'web/main.js');
 
-return $pdoTools->getChunk($outerTpl, array_merge($question, ['answers'=>$answers, 'test_name'=> $test->get('name')]));
+return $modx->getChunk($outerTpl, array_merge($question, ['answers'=>$answers, 'test_name'=> $test->get('name'), 'order_id'=>'123']));

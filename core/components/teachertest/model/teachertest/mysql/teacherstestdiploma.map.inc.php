@@ -34,7 +34,7 @@ $xpdo_meta_map['teachersTestDiploma']= array (
       'null' => false,
     ),
   ),
-  'aggregates' => 
+  'composites' => 
   array (
     'teacher_test_item_id_teacher_test_diploma_test_id' => 
     array (

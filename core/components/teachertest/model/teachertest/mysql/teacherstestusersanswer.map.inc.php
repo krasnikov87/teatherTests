@@ -33,7 +33,7 @@ $xpdo_meta_map['teachersTestUsersAnswer']= array (
       'null' => false,
     ),
   ),
-  'aggregates' => 
+  'composites' => 
   array (
     'teacher_test_question_id_teacher_test_user_answer_question_id' => 
     array (

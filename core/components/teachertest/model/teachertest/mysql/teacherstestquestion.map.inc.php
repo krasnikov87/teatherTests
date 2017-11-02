@@ -44,6 +44,17 @@ $xpdo_meta_map['teachersTestQuestion']= array (
   ),
   'composites' => 
   array (
+    'teacher_test_item_id_teacher_test_question_test_id' => 
+    array (
+      'class' => 'teachersTestItem',
+      'local' => 'test_id',
+      'foreign' => 'id',
+      'cardinality' => 'one',
+      'owner' => 'foreign',
+    ),
+  ),
+  'aggregates' => 
+  array (
     'teacher_test_question_id_teacher_test_answer_question_id' => 
     array (
       'class' => 'teacherTestAnswer',
@@ -59,17 +70,6 @@ $xpdo_meta_map['teachersTestQuestion']= array (
       'foreign' => 'question_id',
       'cardinality' => 'many',
       'owner' => 'local',
-    ),
-  ),
-  'aggregates' => 
-  array (
-    'teacher_test_item_id_teacher_test_question_test_id' => 
-    array (
-      'class' => 'teachersTestItem',
-      'local' => 'test_id',
-      'foreign' => 'id',
-      'cardinality' => 'one',
-      'owner' => 'foreign',
     ),
   ),
 );
