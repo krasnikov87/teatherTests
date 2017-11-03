@@ -37,7 +37,7 @@ class getQuestionProcessor extends modObjectGetProcessor{
         if(!is_object($this->object)){
             $order = $this->getProperty('order');
 
-            return $this->failure('test='.$testId.'&orderId='.$order.'&status=canceled');
+            return $this->failure('?test='.$testId.'&orderId='.$order.'&status=canceled');
         }
         $this->addQuestion();
 
@@ -45,7 +45,7 @@ class getQuestionProcessor extends modObjectGetProcessor{
         $test = $this->modx->getObject('teachersTestItem', $testId);
         if($number == $test->get('count_questions')){
             $order = $this->getProperty('order');
-            return $this->failure('test='.$testId.'&orderId='.$order.'&status=result');
+            return $this->failure('?test='.$testId.'&orderId='.$order.'&status=result');
         }
 
         return $this->success('',[

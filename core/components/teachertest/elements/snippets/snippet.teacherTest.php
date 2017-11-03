@@ -87,7 +87,7 @@ switch ($status){
         $hash = $modx->user->id.$test->get('id').'123'; //todo
         $hash = hash('md5', $hash);
 
-        if(!$_SESSION[$hash] || count($_SESSION[$hash]['answers']) != $test->get('count_questions')){
+        if(!$_SESSION[$hash] /*|| count($_SESSION[$hash]['answers']) != $test->get('count_questions')*/){
             $modx->sendRedirect($modx->makeUrl($modx->resource->id));
         }
 
@@ -114,47 +114,51 @@ switch ($status){
         $q->limit(1);
         $q->prepare();
         $q->stmt->execute();
-
-
         $level = $q->stmt->fetch(PDO::FETCH_ASSOC);
 
 
-        /*save*/
-        $saveTest = $modx->newObject('teacherTestUsers',[
+        if(!$modx->getCount('teacherTestUsers', [
             'test_id' => $testId,
             'user_id'=> $modx->user->id,
             'order_id'=> $orderId,
-            'results'=> $countCorrect,
-            'diploma_id'=> isset($level['id'])? $level['id']: 0,
-            'educational_name_album'=> '',
-            'educational_name_book'=> '',
-            'educational_id' => 0,
-        ]);
+            ])) {
+            /*save*/
+            $saveTest = $modx->newObject('teacherTestUsers', [
+                'test_id' => $testId,
+                'user_id' => $modx->user->id,
+                'order_id' => $orderId,
+                'results' => $countCorrect,
+                'diploma_id' => isset($level['id']) ? $level['id'] : 0,
+                'educational_name_album' => '',
+                'educational_name_book' => '',
+                'educational_id' => 0,
+            ]);
 
 
-        $saveTest->save();
+            $saveTest->save();
 
 
-        /*save answers*/
-        /*foreach ($_SESSION[$hash]['answers'] as  $question => $answer){
-            $saveAnswer = $modx->newObject('teachersTestUsersAnswer');
-            $saveAnswer->set('user_test_id', $saveTest->get('id'));
-            $saveAnswer->set('question_id', $modx->toJSON($question));
-            $saveAnswer->set('answer_ids', $question);
-            //$saveAnswer->save();
+            /*save answers*/
+            foreach ($_SESSION[$hash]['answers'] as $question => $answer) {
+                $saveAnswer = $modx->newObject('teachersTestUsersAnswer');
+                $saveAnswer->set('user_test_id', $saveTest->get('id'));
+                $saveAnswer->set('question_id', $question);
+                $saveAnswer->set('answer_ids',json_encode($answer['ids']));
+                $saveAnswer->set('correct', $answer['correct'] == 'true' ? 1: 0);
+                $saveAnswer->save();
+            }
 
-        }*/
-
+            $test->set('finished_count', $test->get('finished_count')+1);
+            $test->save();
+        }
 
         $congratulation = !empty($level) ?
             $modx->lexicon('teachertest_res_header_success') :
             $modx->lexicon('teachertest_res_header_fail');
 
-        $level = !isset($level['level'])? '':
-            $level['level']>0?
-                $modx->lexicon('teachertest_res_status_level', ['level' =>$level['level']]):
-                $modx->lexicon('teachertest_res_status_participant');
 
+        $level = isset($level['level']) && $level['level'] == 0 ? $modx->lexicon('teachertest_res_status_participant') :
+            isset($level['level']) && $level['level'] > 0 ? $modx->lexicon('teachertest_res_status_level', ['level' =>$level['level']]): '';
 
 
 
@@ -166,8 +170,23 @@ switch ($status){
             'congratulation'=> $congratulation,
             'correct'=> $countCorrect,
             'false'=>$countFalse,
-            'level'=>$level
+            'level'=>$level,
+            'order'=>$orderId
         ]);
+
+        $modx->regClientHTMLBlock(
+            "<script>$(document).ready($.ajax({
+                    method: 'POST',
+                    url: '/assets/components/teachertest/action.php',
+                    dataType: 'json',
+                    data: {
+                        action: 'clear',
+                        hash: '".$hash."'
+                
+                    }
+                  })
+                  );</script>"
+        );
 
         break;
     case 'canceled':
@@ -178,10 +197,16 @@ switch ($status){
         foreach ($tests as $test){
             $output .= $modx->getChunk($allTpl, $test->toArray());
         }
+        break;
 }
 
 $modx->regClientCSS($teacherTest->config['cssUrl'].'web/style.css');
 $modx->regClientScript('http://brm.io/js/libs/matchHeight/jquery.matchHeight.js');
 $modx->regClientScript($teacherTest->config['jsUrl'].'web/main.js');
+$modx->regClientStartupHTMLBlock('<script>
+var testTeacher = {
+    url: "'.$modx->makeUrl($modx->resource->id, '', '', 'full').'"
+};
+</script>');
 
 return $output;

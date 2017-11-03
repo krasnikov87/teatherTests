@@ -14,6 +14,11 @@ $modx->setLogLevel(modX::LOG_LEVEL_ERROR);
 $modx->setLogTarget('FILE');
 
 
+if($_REQUEST['action'] == 'clear' || $_REQUEST['hash']){
+    unset($_SESSION[$_REQUEST['hash']]);
+    return true;
+}
+
 
 if (!empty($_REQUEST['pageId'])) {
     if ($resource = $modx->getObject('modResource', (int)$_REQUEST['pageId'])) {

@@ -22,7 +22,9 @@ $('body').on('submit', '.answers-form', function (event) {
             action: 'web/getquestion',
             form: $(this).serialize()
         },
-        success: function (data) {
+        success: function (data, textStatus, xhr) {
+            console.log(textStatus);
+            console.log(xhr);
             if(data.success) {
                 var quest = '.numbers-question .qu-' + data.object.oldQuestion.number;
                 var number = '.numbers-question .qu-' + data.object.number;
@@ -35,11 +37,14 @@ $('body').on('submit', '.answers-form', function (event) {
                 $('.answers .row').html(data.object.answers);
                 $('.answer-number').matchHeight();
             }else{
-                //= data.message;
-                var u = window.location;
-                u.search = data.message;
-                console.log(u);
+                redirect(data.message);
             }
         }
     })
-})
+});
+
+function redirect (url) {
+    window.location.replace(testTeacher.url + url);
+    // u.search = data.message;
+    console.log(testTeacher.url + url)
+}

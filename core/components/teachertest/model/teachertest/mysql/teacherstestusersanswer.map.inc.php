@@ -9,6 +9,7 @@ $xpdo_meta_map['teachersTestUsersAnswer']= array (
     'question_id' => NULL,
     'answer_ids' => NULL,
     'user_test_id' => NULL,
+    'correct' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -32,32 +33,13 @@ $xpdo_meta_map['teachersTestUsersAnswer']= array (
       'phptype' => 'integer',
       'null' => false,
     ),
-  ),
-  'composites' => 
-  array (
-    'teacher_test_question_id_teacher_test_user_answer_question_id' => 
+    'correct' => 
     array (
-      'class' => 'teachersTestQuestion',
-      'local' => 'question_id',
-      'foreign' => 'id',
-      'cardinality' => 'one',
-      'owner' => 'foreign',
-    ),
-    'teacher_test_answer_id_teacher_test_user_answer_answer_id' => 
-    array (
-      'class' => 'teacherTestAnswer',
-      'local' => 'answer_id',
-      'foreign' => 'id',
-      'cardinality' => 'one',
-      'owner' => 'foreign',
-    ),
-    'teacher_test_users_id_teacher_test_user_answer_answer_id' => 
-    array (
-      'class' => 'teacherTestUsers',
-      'local' => 'user_test_id',
-      'foreign' => 'id',
-      'cardinality' => 'one',
-      'owner' => 'foreign',
+      'dbtype' => 'tinyint',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => true,
+      'default' => 0,
     ),
   ),
 );

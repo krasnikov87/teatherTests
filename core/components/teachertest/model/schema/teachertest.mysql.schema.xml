@@ -10,12 +10,6 @@
         <field key="count_questions" dbtype="int" precision="10" phptype="intefer" null="false" default="15" />
         <field key="price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0" />
 
-        <aggregate alias="teacher_test_item_id_teacher_test_diploma_test_id" class="teachersTestDiplomas" local="id" foreign="test_id" cardinality="many" owner="local" />
-
-        <aggregate alias="teacher_test_item_id_test_user_test_id" class="teachersTestUsers" local="id" foreign="test_id" cardinality="many" owner="local" />
-
-
-        <aggregate alias="teacher_test_item_id_teacher_test_question_test_id" class="teachersTestQuestion" local="id" foreign="test_id" cardinality="many" owner="local" />
     </object>
 
     <object class="teachersTestDiploma" table="teacher_test_diploma" extends="xPDOSimpleObject">
@@ -32,12 +26,6 @@
         <field key="question" dbtype="text" phptype="string" null="false" />
         <field key="status" dbtype="tinyint" precision="1" phptype="integer" null="false" default="1" />
         <field key="type" dbtype="varchar" precision="50" phptype="string" null="false" default="radio" />
-
-        <aggregate alias="teacher_test_question_id_teacher_test_answer_question_id" class="teacherTestAnswer" local="id" foreign="question_id" cardinality="many" owner="local" />
-
-        <aggregate alias="teacher_test_question_id_teacher_test_user_answer_question_id" class="teachersTestUsersAnswer" local="id" foreign="question_id" cardinality="many" owner="local" />
-
-        <composite alias="teacher_test_item_id_teacher_test_question_test_id" class="teachersTestItem" local="test_id" foreign="id" cardinality="one" owner="foreign" />
     </object>
 
     <object class="teacherTestAnswer" table="teacher_test_answer" extends="xPDOSimpleObject">
@@ -45,10 +33,6 @@
         <field key="answer" dbtype="text" phptype="string" null="false" />
         <field key="correct" dbtype="TINYINT" precision="1" phptype="integer" null="true" default="0" />
 
-
-        <aggregate alias="teacher_test_answer_id_teacher_test_user_answer_answer_id" class="teachersTestUsersAnswer" local="id" foreign="answer_id" cardinality="many" owner="local" />
-
-        <composite alias="teacher_test_question_id_teacher_test_answer_question_id" class="teachersTestQuestion" local="question_id" foreign="id" cardinality="one" owner="foreign" />
     </object>
 
     <object class="teacherTestUsers" table="teacher_test_users" extends="xPDOSimpleObject">
@@ -62,23 +46,13 @@
         <field key="educational_name_album" dbtype="text" phptype="string" null="false" />
         <field key="educational_name_book" dbtype="text" phptype="string" null="false" />
 
-        <aggregate alias="teacher_test_users_id_teacher_test_user_answer_answer_id" class="teachersTestUsersAnswer" local="id" foreign="user_test_id" cardinality="many" owner="local" />
-
-        <composite alias="teacher_test_item_id_test_user_test_id" class="teachersTestItem" local="test_id" foreign="id" cardinality="one" owner="foreign" />
-
     </object>
 
     <object class="teachersTestUsersAnswer" table="teacher_test_user_answer" extends="xPDOSimpleObject">
         <field key="question_id" dbtype="int" precision="10" phptype="integer" null="false" />
         <field key="answer_ids" dbtype="text" phptype="json" null="false" />
         <field key="user_test_id" dbtype="int" precision="11" phptype="integer" null="false" />
-
-        <composite alias="teacher_test_question_id_teacher_test_user_answer_question_id" class="teachersTestQuestion" local="question_id" foreign="id" cardinality="one" owner="foreign" />
-
-        <composite alias="teacher_test_answer_id_teacher_test_user_answer_answer_id" class="teacherTestAnswer" local="answer_id" foreign="id" cardinality="one" owner="foreign" />
-
-        <composite alias="teacher_test_users_id_teacher_test_user_answer_answer_id" class="teacherTestUsers" local="user_test_id" foreign="id" cardinality="one" owner="foreign" />
-
+        <field key="correct" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="0" />
     </object>
 
 </model>

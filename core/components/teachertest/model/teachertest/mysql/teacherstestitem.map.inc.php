@@ -78,31 +78,4 @@ $xpdo_meta_map['teachersTestItem']= array (
       'default' => 0,
     ),
   ),
-  'aggregates' => 
-  array (
-    'teacher_test_item_id_teacher_test_diploma_test_id' => 
-    array (
-      'class' => 'teachersTestDiplomas',
-      'local' => 'id',
-      'foreign' => 'test_id',
-      'cardinality' => 'many',
-      'owner' => 'local',
-    ),
-    'teacher_test_item_id_test_user_test_id' => 
-    array (
-      'class' => 'teachersTestUsers',
-      'local' => 'id',
-      'foreign' => 'test_id',
-      'cardinality' => 'many',
-      'owner' => 'local',
-    ),
-    'teacher_test_item_id_teacher_test_question_test_id' => 
-    array (
-      'class' => 'teachersTestQuestion',
-      'local' => 'id',
-      'foreign' => 'test_id',
-      'cardinality' => 'many',
-      'owner' => 'local',
-    ),
-  ),
 );
