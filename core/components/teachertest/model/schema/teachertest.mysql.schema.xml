@@ -8,6 +8,7 @@
         <field key="finished_count" dbtype="int" precision="10" phptype="integer" null="true" default="0" />
         <field key="payment_count" dbtype="int" precision="10" phptype="integer" null="true" default="0" />
         <field key="count_questions" dbtype="int" precision="10" phptype="intefer" null="false" default="15" />
+        <field key="price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0" />
 
         <aggregate alias="teacher_test_item_id_teacher_test_diploma_test_id" class="teachersTestDiplomas" local="id" foreign="test_id" cardinality="many" owner="local" />
 
@@ -55,7 +56,7 @@
         <field key="user_id" dbtype="int" precision="10" phptype="integer" null="false" />
         <field key="order_id" dbtype="int" precision="10" phptype="integer" null="false" />
         <field key="product_id" dbtype="int" precision="10" phptype="integer" null="false" />
-        <field key="results_id" dbtype="int" precision="10" phptype="integer" null="false" />
+        <field key="results" dbtype="int" precision="10" phptype="integer" null="false" />
         <field key="diploma_id" dbtype="int" precision="10" phptype="integer" null="false" />
         <field key="educational_id" dbtype="int" precision="10" phptype="integer" null="false" />
         <field key="educational_name_album" dbtype="text" phptype="string" null="false" />

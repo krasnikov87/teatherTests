@@ -35,7 +35,10 @@ $('body').on('submit', '.answers-form', function (event) {
                 $('.answers .row').html(data.object.answers);
                 $('.answer-number').matchHeight();
             }else{
-                window.location.href = data.message;
+                //= data.message;
+                var u = window.location;
+                u.search = data.message;
+                console.log(u);
             }
         }
     })

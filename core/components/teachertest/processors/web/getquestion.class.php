@@ -31,11 +31,22 @@ class getQuestionProcessor extends modObjectGetProcessor{
 
     public function cleanup() {
         $number = $this->getProperty('question-number');
+        $testId = $this->getProperty('test');
         $correct = $this->checkCorrect();
+
         if(!is_object($this->object)){
-            return $this->failure($this->modx->makeUrl(26));
+            $order = $this->getProperty('order');
+
+            return $this->failure('test='.$testId.'&orderId='.$order.'&status=canceled');
         }
         $this->addQuestion();
+
+
+        $test = $this->modx->getObject('teachersTestItem', $testId);
+        if($number == $test->get('count_questions')){
+            $order = $this->getProperty('order');
+            return $this->failure('test='.$testId.'&orderId='.$order.'&status=result');
+        }
 
         return $this->success('',[
             'question'=>$this->object->toArray(),
@@ -65,11 +76,9 @@ class getQuestionProcessor extends modObjectGetProcessor{
         $questionId = $this->getProperty('question');
 
         $diff = array_diff($correctIds, $_SESSION[$hash]['answers'][$questionId]['ids']);
-        $this->modx->log(1, print_r($diff,1));
         if(count($diff)== 0){
             $diff = array_diff($_SESSION[$hash]['answers'][$questionId]['ids'], $correctIds);
         }
-        $this->modx->log(1, print_r($diff,1));
         if(count($diff)!= 0){
             $correct = 'false';
         }else{

@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="/assets/components/teachertest/css/web/style.css">
 <div class="row">
     <div class="col-lg-12">
         <h1>[[+test_name]]</h1>

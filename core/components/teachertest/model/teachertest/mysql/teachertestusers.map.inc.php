@@ -10,7 +10,7 @@ $xpdo_meta_map['teacherTestUsers']= array (
     'user_id' => NULL,
     'order_id' => NULL,
     'product_id' => NULL,
-    'results_id' => NULL,
+    'results' => NULL,
     'diploma_id' => NULL,
     'educational_id' => NULL,
     'educational_name_album' => NULL,
@@ -46,7 +46,7 @@ $xpdo_meta_map['teacherTestUsers']= array (
       'phptype' => 'integer',
       'null' => false,
     ),
-    'results_id' => 
+    'results' => 
     array (
       'dbtype' => 'int',
       'precision' => '10',

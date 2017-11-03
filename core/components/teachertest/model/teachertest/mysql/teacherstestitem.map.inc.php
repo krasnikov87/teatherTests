@@ -13,6 +13,7 @@ $xpdo_meta_map['teachersTestItem']= array (
     'finished_count' => 0,
     'payment_count' => 0,
     'count_questions' => 15,
+    'price' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -67,6 +68,14 @@ $xpdo_meta_map['teachersTestItem']= array (
       'phptype' => 'intefer',
       'null' => false,
       'default' => 15,
+    ),
+    'price' => 
+    array (
+      'dbtype' => 'decimal',
+      'precision' => '12,2',
+      'phptype' => 'float',
+      'null' => true,
+      'default' => 0,
     ),
   ),
   'aggregates' => 

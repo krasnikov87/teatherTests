@@ -100,6 +100,11 @@ Ext.extend(teacherTest.window.CreateItem, MODx.Window, {
             html: '<img src="#">'
         }, {
             xtype: 'numberfield',
+            fieldLabel: _('teachertest_item_price'),
+            name: 'price',
+            id: config.id + '-price',
+        }, {
+            xtype: 'numberfield',
             fieldLabel: _('teachertest_item_count_questions'),
             name: 'count_questions',
             id: config.id + '-count_questions',
@@ -192,6 +197,11 @@ Ext.extend(teacherTest.window.UpdateItem, MODx.Window, {
                     id: 'photoHtml',
                     hidetitle: true,
                     html: config.record.object.image ? '<img src="/' + config.record.object.image + '" style="width: 100%; max-width: 300px; height: auto; max-height: 300px; margin-top:10px">' : '<img src="#">'
+                }, {
+                    xtype: 'numberfield',
+                    fieldLabel: _('teachertest_item_price'),
+                    name: 'price',
+                    id: config.id + '-price',
                 }, {
                     xtype: 'numberfield',
                     fieldLabel: _('teachertest_item_count_questions'),

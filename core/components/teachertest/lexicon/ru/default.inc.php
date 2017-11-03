@@ -99,7 +99,7 @@ $_lang['teachertest-combo-balls-types-level-first'] = 'Первый';
 $_lang['teachertest-combo-balls-types-level-two'] = 'Второй';
 $_lang['teachertest-combo-balls-types-level-three'] = 'Третий';
 $_lang['teachertest-combo-balls-types-level-four'] = 'Участник';
-$_lang['teachertest_balls_min'] = 'Минимум балов';
+$_lang['teachertest_balls_min'] = 'Минимум баллов';
 
 
 /*Ответы*/
@@ -136,3 +136,8 @@ $_lang['teachertest_item_count_questions'] = 'Вопросов в тесте';
 $_lang['teachertest_question_count_error'] = 'В этом тесте должно быть минимум [[+count]] активных вопросов.';
 $_lang['teachertest_graduation_count_error'] = 'В этом тесте должна быть минимум одна градация.';
 $_lang['teachertest_answer_count_error'] = 'В вопросе должно быть минимум два ответа.';
+$_lang['teachertest_item_price'] = 'Цена';
+$_lang['teachertest_res_header_success'] = 'Вы успешно прошли тестирование!';
+$_lang['teachertest_res_header_fail'] = 'Вы не набрали достаточного количества баллов.';
+$_lang['teachertest_res_status_level'] = 'Победитель [[+level]] степени.';
+$_lang['teachertest_res_status_participant'] = 'Участник.';
