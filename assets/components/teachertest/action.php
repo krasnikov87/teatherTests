@@ -35,8 +35,8 @@ if (!$teacherTest = $modx->getService('teachertest', 'teacherTest', $modx->getOp
     return 'Could not load teacherTest class!';
 }
 
-$data = [];
-parse_str($_REQUEST['form'], $data);
 
-$output = $modx->runProcessor($_REQUEST['action'],$data,array('processors_path' => MODX_CORE_PATH.'components/teachertest/processors/'));
-echo $modx->toJSON($output->response);
+echo $output = $modx->runSnippet('teacherTest', [
+    'action'=>$_REQUEST['action'],
+    'data'=>$_REQUEST['form'],
+    'testId'=> $_REQUEST['testid']]);

@@ -13,38 +13,49 @@ $('body').on('submit', '.answers-form', function (event) {
     }
 
     if(error) return false;
-
-    $.ajax({
-        method: 'POST',
-        url: '/assets/components/teachertest/action.php',
-        dataType: 'json',
-        data: {
-            action: 'web/getquestion',
-            form: $(this).serialize()
-        },
-        success: function (data, textStatus, xhr) {
-            console.log(textStatus);
-            console.log(xhr);
-            if(data.success) {
-                var quest = '.numbers-question .qu-' + data.object.oldQuestion.number;
-                var number = '.numbers-question .qu-' + data.object.number;
-                $(quest).removeClass('active').addClass(data.object.oldQuestion.correct);
-                $(number).addClass('active');
-                $('.question-name span').html(data.object.number);
-                $('[name=question]').val(data.object.question.id);
-                $('[name=question-number]').val(data.object.number);
-                $('.question-text').html(data.object.question.question);
-                $('.answers .row').html(data.object.answers);
-                $('.answer-number').matchHeight();
-            }else{
-                redirect(data.message);
-            }
-        }
-    })
+    var res = send({
+        action:'answer',
+        form: $(this).serialize()
+    });
+    var data = JSON.parse(res);
+    if(data.success) {
+        var quest = '.numbers-question .qu-' + data.oldQuestion.number;
+        var number = '.numbers-question .qu-' + data.number;
+        $(quest).removeClass('active').addClass(data.oldQuestion.correct);
+        $(number).addClass('active');
+        $('.question-name span').html(data.number);
+        $('[name=question]').val(data.question.id);
+        $('[name=question-number]').val(data.number);
+        $('.question-text').html(data.question.question);
+        $('.answers .row').html(data.answers);
+        $('.answer-number').matchHeight();
+    }else{
+        var res = send({
+            action: data.action,
+            form: $.param(data.form),
+        });
+        $('.allTest').html(res);
+    }
 });
 
-function redirect (url) {
-    window.location.replace(testTeacher.url + url);
-    // u.search = data.message;
-    console.log(testTeacher.url + url)
-}
+$('body').on('click', '.testStart', function (event) {
+   event.preventDefault();
+   var res = send({
+       action: 'new',
+       testid: $(this).data('test'),
+   });
+   $('.allTest').html(res);
+});
+
+
+function send(data){
+
+     return $.ajax({
+        method: 'POST',
+        url: testTeacher.url,
+        dataType: 'json',
+         async: false,
+        data: data,
+    }).responseText;
+
+};

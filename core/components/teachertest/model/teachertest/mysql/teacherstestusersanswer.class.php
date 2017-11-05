@@ -1,3 +1,3 @@
 <?php
-require_once (dirname(dirname(__FILE__)) . '/teacherstestusersanswer.class.php');
+require_once (dirname(__DIR__) . '/teacherstestusersanswer.class.php');
 class teachersTestUsersAnswer_mysql extends teachersTestUsersAnswer {}

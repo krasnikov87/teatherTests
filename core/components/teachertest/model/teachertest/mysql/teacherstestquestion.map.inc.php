@@ -4,6 +4,10 @@ $xpdo_meta_map['teachersTestQuestion']= array (
   'version' => '1.1',
   'table' => 'teacher_test_question',
   'extends' => 'xPDOSimpleObject',
+  'tableMeta' => 
+  array (
+    'engine' => 'MyISAM',
+  ),
   'fields' => 
   array (
     'test_id' => NULL,

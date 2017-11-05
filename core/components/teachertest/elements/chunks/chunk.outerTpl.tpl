@@ -22,7 +22,7 @@
         <div class="col-lg-12">
             <div class="row">
                 <button class="btn btn-default pull-left" type="submit">Далее</button>
-                <a href="[[~[[*id]]]]" class="btn btn-default pull-right">Отменить прохождение</a>
+                <a href="" class="btn btn-default pull-right">Отменить прохождение</a>
             </div>
         </div>
     </form>

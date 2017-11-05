@@ -4,6 +4,10 @@ $xpdo_meta_map['teachersTestItem']= array (
   'version' => '1.1',
   'table' => 'teacher_test_item',
   'extends' => 'xPDOSimpleObject',
+  'tableMeta' => 
+  array (
+    'engine' => 'MyISAM',
+  ),
   'fields' => 
   array (
     'name' => '',
@@ -13,7 +17,7 @@ $xpdo_meta_map['teachersTestItem']= array (
     'finished_count' => 0,
     'payment_count' => 0,
     'count_questions' => 15,
-    'price' => 0,
+    'price' => 0.0,
   ),
   'fieldMeta' => 
   array (
@@ -75,7 +79,7 @@ $xpdo_meta_map['teachersTestItem']= array (
       'precision' => '12,2',
       'phptype' => 'float',
       'null' => true,
-      'default' => 0,
+      'default' => 0.0,
     ),
   ),
 );

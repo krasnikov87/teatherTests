@@ -7,7 +7,6 @@
 $allTpl = $modx->getOption('allTpl', $scriptProperties, 'tpl.teacherTest.allTest');
 $outerTpl = $modx->getOption('outerTpl', $scriptProperties, 'tpl.teacherTest.outerTpl');
 $answerTpl = $modx->getOption('answerTpl', $scriptProperties, 'tpl.teacherTest.answerTpl');
-$testId = $modx->getOption('test', $scriptProperties, $modx->request->getParameters('test'));
 $countsTpl = $modx->getOption('countsTpl', $scriptProperties, 'tpl.teacherTest.countsTpl');
 $resultTpl = $modx->getOption('resultTpl', $scriptProperties, 'tpl.teacherTest.resultTpl');
 
@@ -17,51 +16,45 @@ if (!$teacherTest = $modx->getService('teachertest', 'teacherTest', $modx->getOp
     return 'Could not load teacherTest class!';
 }
 
+$action = $modx->getOption('action', $scriptProperties, '');
 
-$status = $modx->request->getParameters('status');
+//todo $testId
+//todo $orderId
+$data = [];
+parse_str($modx->getOption('data', $scriptProperties, ''), $data);
 
-switch ($status){
-    case 'test':
+$teacherTest->testId = $modx->getOption('testId', $scriptProperties, $data['test']);
+$teacherTest->orderId =  isset($data['order'])? $data['order']: 0;
+$teacherTest->userId = $modx->user->id;
+
+
+switch ($action){
+    case 'new':
         /*Проверяем авторизирован ли пользователь*/
-        if(!$modx->user->get('id')){
+        if(!$teacherTest->userId){
             $modx->sendRedirect($modx->makeUrl(1)); //todo
         }
 
-
+        $hash = $teacherTest->getHash();
+        if($_SESSION[$hash]) unset($_SESSION[$hash]);
+        
         /*Получение теста*/
-        $test = $modx->getObject('teachersTestItem', $testId);
+        $test = $modx->getObject('teachersTestItem', $teacherTest->testId);
 
-        $q = $modx->newQuery('teachersTestQuestion', ['test_id'=>$testId, 'status'=>1]);
-        $q->select($modx->getSelectColumns('teachersTestQuestion', 'teachersTestQuestion', '', ['id', 'question', 'type', 'test_id']));
-        $q->limit(1);
-        $q->sortby('RAND()');
-        $q->prepare();
-
-        $q->stmt->execute();
-        $question = $q->stmt->fetch(PDO::FETCH_ASSOC);
+        $question = $teacherTest->getQuestion();
 
         /*Ответы*/
-        $a = $modx->newQuery('teacherTestAnswer', ['question_id' => $question['id']]);
-        $a->select($modx->getSelectColumns('teacherTestAnswer', 'teacherTestAnswer', '', ['id', 'answer']));
-        $a->sortby('RAND()');
-        $a->prepare();
-        $a->stmt->execute();
-        $answers = '';
-        $idx = 1;
-        foreach ($a->stmt->fetchAll(PDO::FETCH_ASSOC) as $answer){
-            $answers .= $modx->getChunk($answerTpl, array_merge($answer, ['type' => $question['type'], 'idx'=> $idx++]));
-        }
+        $answers = $teacherTest->getAnswers($question['id'], $answerTpl, $question['type']);
 
         /*Список вопросов*/
         $counts = '';
         for($i = 1; $i<= $test->get('count_questions'); $i++){
-            $counts .= $modx->getChunk($countsTpl, ['i'=>$i]);
+            $counts .= $modx->getChunk($countsTpl, ['i'=>$i, 'class'=> '']);
         }
 
-        $hash = $modx->user->id.$test->get('id').'123';
-        $_SESSION[hash('md5', $hash)] = [
-            'answerChunk'=> $answerTpl,
-            'order_id'=>123,
+
+        $_SESSION[$hash] = [
+            'order_id'=>$teacherTest->orderId,
             'test_id'=>$test->get('id'),
             'questions'=> [
                 $question['id']
@@ -69,26 +62,72 @@ switch ($status){
             'answers' => [],
         ];
 
-
+        
         $output =  $modx->getChunk($outerTpl, array_merge($question, [
             'answers'=>$answers,
             'test_name'=> $test->get('name'),
-            'order_id'=>'123',
+            'order_id'=>$teacherTest->orderId,
             'count'=> $counts
         ]));
+        
+        break;
 
+    case 'answer' :
+        $hash =$teacherTest->getHash();
+
+        if($_SESSION[$hash]){
+            $teacherTest->saveAnswer($data);
+        }else{
+           return $modx->toJSON(['action'=>'error','success'=>false]);
+        }
+
+        $correct = $teacherTest->checkCorrect($data['question']);
+
+        $test = $modx->getObject('teachersTestItem', $data['test']);
+        if($data['question-number'] == $test->get('count_questions')){
+            return $modx->toJSON([
+                'action'=>'result',
+                'success'=>false,
+                'form'=>[
+                    'test'=>$teacherTest->testId,
+                    'order'=>$teacherTest->orderId,
+                    ]
+                ]);
+        }
+
+        $question = $teacherTest->getQuestion();
+        if(empty($question)){
+            return $modx->toJSON(['action'=>'error','success'=>false]);
+        }
+        $teacherTest->addQuestion($question['id']);
+
+
+        $answers = $teacherTest->getAnswers($question['id'], $answerTpl, $question['type']);
+
+        $output = [
+            'success'=>true,
+            'question'=>$question,
+            'answers' =>  $answers,
+            'oldQuestion'=>[
+                'number' => $data['question-number'],
+                'correct' => $correct,
+            ],
+            'number'=> ++$data['question-number'],
+        ];
+
+        return $modx->toJSON($output);
         break;
 
     case 'result':
 
-        $orderId = $modx->request->getParameters('orderId');
-        $test = $modx->getObject('teachersTestItem', $testId);
 
-        $hash = $modx->user->id.$test->get('id').'123'; //todo
-        $hash = hash('md5', $hash);
+        $test = $modx->getObject('teachersTestItem', $teacherTest->testId);
 
-        if(!$_SESSION[$hash] /*|| count($_SESSION[$hash]['answers']) != $test->get('count_questions')*/){
-            $modx->sendRedirect($modx->makeUrl($modx->resource->id));
+
+        $hash = $teacherTest->getHash();
+      
+        if(!$_SESSION[$hash] || count($_SESSION[$hash]['answers']) != $test->get('count_questions')){
+            return $modx->toJSON(['action'=>'', 'success'=>'false']);
         }
 
         $counts = '';
@@ -108,8 +147,8 @@ switch ($status){
         $q->select($modx->getSelectColumns('teachersTestDiploma', 'teachersTestDiploma', '', ['level', 'id']));
         $q->where([
             'min_balls:<='=>$countCorrect,
-            'test_id'=>$testId,
-            ]);
+            'test_id'=>$teacherTest->testId,
+        ]);
         $q->sortby('teachersTestDiploma.min_balls', 'DESC');
         $q->limit(1);
         $q->prepare();
@@ -117,16 +156,17 @@ switch ($status){
         $level = $q->stmt->fetch(PDO::FETCH_ASSOC);
 
 
-        if(!$modx->getCount('teacherTestUsers', [
-            'test_id' => $testId,
-            'user_id'=> $modx->user->id,
-            'order_id'=> $orderId,
-            ])) {
+        if($modx->getCount('teacherTestUsers', [
+            'test_id' => $teacherTest->testId,
+            'user_id'=> $teacherTest->userId,
+            'order_id'=> $teacherTest->orderId,
+        ])== 0) {
             /*save*/
             $saveTest = $modx->newObject('teacherTestUsers', [
-                'test_id' => $testId,
-                'user_id' => $modx->user->id,
-                'order_id' => $orderId,
+                'test_id' => $teacherTest->testId,
+                'user_id' => $teacherTest->userId,
+                'order_id' => $teacherTest->orderId,
+                'product_id'=>1, /*TODO*/
                 'results' => $countCorrect,
                 'diploma_id' => isset($level['id']) ? $level['id'] : 0,
                 'educational_name_album' => '',
@@ -156,9 +196,16 @@ switch ($status){
             $modx->lexicon('teachertest_res_header_success') :
             $modx->lexicon('teachertest_res_header_fail');
 
+       //return print_r($level,1);
 
-        $level = isset($level['level']) && $level['level'] == 0 ? $modx->lexicon('teachertest_res_status_participant') :
-            isset($level['level']) && $level['level'] > 0 ? $modx->lexicon('teachertest_res_status_level', ['level' =>$level['level']]): '';
+        if ($level['level'] == 4){
+            $levelnew = $modx->lexicon('teachertest_res_status_participant');
+        } elseif ($level['level'] < 4 && !empty($level['level'])){
+            $levelnew = $modx->lexicon('teachertest_res_status_level', ['level' =>$level['level']]);
+        }else{
+            $levelnew = '';
+        }
+
 
 
 
@@ -170,27 +217,12 @@ switch ($status){
             'congratulation'=> $congratulation,
             'correct'=> $countCorrect,
             'false'=>$countFalse,
-            'level'=>$level,
-            'order'=>$orderId
+            'level'=>$levelnew,
+            'order'=>$teacherTest->orderId
         ]);
 
-        $modx->regClientHTMLBlock(
-            "<script>$(document).ready($.ajax({
-                    method: 'POST',
-                    url: '/assets/components/teachertest/action.php',
-                    dataType: 'json',
-                    data: {
-                        action: 'clear',
-                        hash: '".$hash."'
-                
-                    }
-                  })
-                  );</script>"
-        );
-
         break;
-    case 'canceled':
-        $output = '<h1>[[*pagetitle]]</h1>';
+
     default:
         $tests = $modx->getCollection('teachersTestItem', ['status'=>1]);
         if(!$output) $output = '<h1>[[*pagetitle]]</h1>';
@@ -205,7 +237,7 @@ $modx->regClientScript('http://brm.io/js/libs/matchHeight/jquery.matchHeight.js'
 $modx->regClientScript($teacherTest->config['jsUrl'].'web/main.js');
 $modx->regClientStartupHTMLBlock('<script>
 var testTeacher = {
-    url: "'.$modx->makeUrl($modx->resource->id, '', '', 'full').'"
+    url: "/assets/components/teachertest/action.php"
 };
 </script>');
 
